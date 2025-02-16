@@ -8,11 +8,29 @@ const Contact: React.FC = () => {
     subject: '',
     message: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    setIsLoading(true);
+    
+    // Simulate API call
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      console.log('Form submitted:', formData);
+      setShowSuccess(true);
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -21,6 +39,8 @@ const Contact: React.FC = () => {
       ...prev,
       [name]: value
     }));
+    // Reset success message when user starts typing again
+    if (showSuccess) setShowSuccess(false);
   };
 
   return (
@@ -66,6 +86,11 @@ const Contact: React.FC = () => {
         </div>
 
         <div className="contact-form-container">
+          {showSuccess && (
+            <div className="success-message">
+              Thank you for your message! I'll get back to you soon.
+            </div>
+          )}
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Name</label>
@@ -76,6 +101,7 @@ const Contact: React.FC = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
+                disabled={isLoading}
               />
             </div>
 
@@ -88,6 +114,7 @@ const Contact: React.FC = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                disabled={isLoading}
               />
             </div>
 
@@ -100,6 +127,7 @@ const Contact: React.FC = () => {
                 value={formData.subject}
                 onChange={handleChange}
                 required
+                disabled={isLoading}
               />
             </div>
 
@@ -111,12 +139,17 @@ const Contact: React.FC = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
+                disabled={isLoading}
                 rows={5}
               ></textarea>
             </div>
 
-            <button type="submit" className="submit-btn">
-              Send Message
+            <button 
+              type="submit" 
+              className={`submit-btn ${isLoading ? 'loading' : ''}`}
+              disabled={isLoading}
+            >
+              {isLoading ? '' : 'Send Message'}
             </button>
           </form>
         </div>

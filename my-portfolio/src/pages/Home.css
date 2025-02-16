@@ -2,10 +2,11 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .hero-section {
-  min-height: 60vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,88 +16,145 @@
 }
 
 .hero-section h1 {
-  font-size: 3.5rem;
+  font-size: 4rem;
   margin-bottom: 1rem;
-  color: #2d3436;
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;  
+  -webkit-text-fill-color: transparent;
+  animation: slideUp 0.8s ease-out;
 }
 
 .subtitle {
   font-size: 1.5rem;
-  color: #636e72;
+  color: var(--text-secondary);
   margin-bottom: 2rem;
+  animation: slideUp 0.8s ease-out 0.2s backwards;
 }
 
 section {
-  margin: 4rem 0;
+  margin: 6rem 0;
   padding: 2rem 0;
+  animation: fadeIn 0.5s ease-out;
 }
 
 h2 {
-  font-size: 2rem;
-  color: #2d3436;
+  font-size: 2.5rem;
+  color: var(--text-primary);
   margin-bottom: 2rem;
+  text-align: center;
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .about-section p {
   font-size: 1.2rem;
   line-height: 1.6;
-  color: #636e72;
+  color: var(--text-secondary);
   max-width: 800px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 3rem;
+  padding: 0 1rem;
 }
 
 .skill-item {
-  background: #f8f9fa;
-  padding: 1rem;
-  border-radius: 8px;
+  background: var(--bg-primary);
+  padding: 1.5rem;
+  border-radius: var(--rounded-lg);
   text-align: center;
   font-weight: 500;
-  color: #2d3436;
-  transition: transform 0.2s, box-shadow 0.2s;
+  color: var(--text-primary);
+  transition: var(--transition-all);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--bg-tertiary);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: var(--transition-all);
+  z-index: 1;
+}
+
+.skill-item span {
+  position: relative;
+  z-index: 2;
 }
 
 .skill-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
+  color: white;
+  background-clip: text;
+}
+
+.skill-item:hover::before {
+  opacity: 1;
 }
 
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 3rem;
+  padding: 0 1rem;
 }
 
 .project-card {
-  background: #ffffff;
+  background: var(--bg-primary);
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  border-radius: var(--rounded-lg);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-all);
+  border: 1px solid var(--bg-tertiary);
+  text-align: left;
 }
 
 .project-card:hover {
   transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
 }
 
 .project-card h3 {
-  color: #2d3436;
+  color: var(--text-primary);
   margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .project-card p {
-  color: #636e72;
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 .contact-section {
   text-align: center;
+  background: var(--bg-primary);
+  padding: 4rem 2rem;
+  border-radius: var(--rounded-lg);
+  box-shadow: var(--shadow-md);
+  margin: 4rem auto;
+  max-width: 800px;
+}
+
+.contact-section .btn {
+  margin-top: 2rem;
 }
 
 .social-links {
@@ -107,16 +165,30 @@ h2 {
 }
 
 .social-links a {
-  color: #2d3436;
+  color: var(--text-primary);
   text-decoration: none;
   font-weight: 500;
   padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.2s;
+  border-radius: var(--rounded-md);
+  transition: var(--transition-all);
+  background: var(--bg-tertiary);
 }
 
 .social-links a:hover {
-  background-color: #f8f9fa;
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
@@ -130,5 +202,17 @@ h2 {
   
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  section {
+    margin: 3rem 0;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .contact-section {
+    padding: 2rem 1rem;
   }
 } 
